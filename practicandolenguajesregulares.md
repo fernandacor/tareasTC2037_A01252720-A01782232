@@ -4,7 +4,7 @@ Reference for math symbols:
 https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 
 ## Names:
-- Alina Rosas A012
+- Alina Rosas A01252720
 - Fernanda Cantú A01782232
 
 
@@ -19,38 +19,52 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 
     _**SOLUTION:**_ <br>
 
-    Let S be a set of strings. <br>
+    Let X be a set of strings. <br>
 
-    **I. Basis:** b $\in$ S <br>
+    **I. Basis:** b $\in$ X <br>
     **II. Recursive Step:** <br>
+
     **III. Closure:** <br>
 
 
 2. Let $X = \{aa, bb\}$ and $Y = \{\lambda, b, ab\}$.
 
-    a. List the strings in set $XY$
+    **a. List the strings in set $XY$**
 
     #|string|#|string|#|string
     -|-|-|-|-|-
     1| aa |2| aab |3| aaab |
     4 | bb | 5 | bbb | 6 | bbab | 
 
-    b. How many strings of length 6 are there in $X^*$?
-
+    **b. How many strings of length 6 are there in $X^*$?** <br>
+    There are 8 strings of length 6 in $X^*$: <br>
+    <ol>
+    <li>aa-aa-aa
+    <li>aa-aa-bb
+    <li>aa-bb-aa
+    <li>bb-aa-aa
+    <li>bb-bb-aa
+    <li>aa-bb-bb
+    <li>bb-aa-bb
+    <li>bb-bb-bb
+    </ol> <br>
 
     c. List the strings in set $Y^*$ of length three or less
 
     #|string|#|string|#|string
     -|-|-|-|-|-
-
-
+    | 1 | b | 2 | bb | 3 | bbb |
+    | 4 | ab | 5 | abb | 6 | bab |
+    | 7 | $\lambda$
 
     d. List the strings in set $X^* Y^*$ of length four or less
 
     #|string|#|string|#|string
     -|-|-|-|-|-
-
-
+    1 | aa | 2 | bb | 3 | b |
+    4 | ab | 5 | aab | 6 | aaab |
+    7 | bbb | 8 | bbab | 9 | aaaa |
+    10 | bbbb | 11 | abab | 12 | $\lambda$
 
 3. Give a recursive definition of the set $\{ a^ib^j | 0 ≤ i ≤ j ≤ 2i\}$
 
@@ -69,8 +83,10 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
     **III. Closure**: A string $u \in L$ only if it can be obtained from the
     basis using a finite number of applications of the recursive step.
 
-    **a.** List the elements in the sets $L_0, L_1, L_2$
-
+    **a.** List the elements in the sets $L_0, L_1, L_2$ <br>
+    $L_0 = \lambda$ <br>
+    $L_1 = \lambda$ <br>
+    $L_2 = \lambda$ <br>
 
     **b.** Is the string $bbaaba$ in $L$? If so, trace how it is produced.
     If not, explain why not.
