@@ -21,7 +21,7 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 
     **I. Basis:** $b \in L$ <br>
 
-    **II. Recursive Step:** If $ u \in L$ , then <br>
+    **II. Recursive Step:** If $ u \in L$ , then $aau \in L, ua \in L, ub \in L$<br>
 
     **III. Closure:** $u \in L$ only if it can be obtained from the base case using a finite number of applications of the recursive step <br>
 
@@ -110,7 +110,8 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 5. Prove, using induction on the length of a string, that $(w^R)^R = w$ for all string $w \in \Sigma$
 
     _**SOLUTION:**_ <br>
-    **I. Basis:** <br>
+    **I. Basis:** If $length(w) = 0$, then $w = \lambda$ and $\lambda^R = \lambda$ and $(\lambda^R)^R = \lambda$ <br>
+    pero si length(w) = 2 = ab entonces WR = ba y WRR = ab
     **II. Inductive Hypothesis:** <br>
     **III. Inductive Step:** <br>
 
