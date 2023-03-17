@@ -69,7 +69,8 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 
     _**SOLUTION:**_
 
-    **I. Basis:**  <br>
+    **I. Basis:**  Let set X = $\{ a^ib^j | 0 ≤ i ≤ j ≤ 2i\}$<br>
+    where X = [0,0]
 
     **II. Recursive Step:** <br>
 
@@ -92,27 +93,33 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
     $L_1 =$ b <br>
     $L_2 =$ {bb, bab, bba, bba} <br>
         
-    <!-- EXTRA: <br>
-    $L_3 =$ {bbb, bbab, bbba, bbba, babb, babab, babba, bbaba, bbab, bbaab, bbaba, bbbaa} -->
+    EXTRA: <br>
+    $L_3 =$ {bbb, bbab, bbba, bbba, babb, babab, babba, bbaba, bbab, bbaab, bbaba, bbbaa}
 
 
     **b.** Is the string $bbaaba$ in $L$? If so, trace how it is produced.
     If not, explain why not.
 
-    bbaaba where uba where u = bbaa
-    bbaaba where bua where u = baab
+    The string $bbaaba$ is not a part of L. This can be seen when $L_3$ (check subsection 3.a) is traced, for the only two possible options for bbaaba to occur are $uba \in L$ where $u = bbaa$, or $bua \in L$ when $u = baab$. This does not happen in $L_3$, and for $L_4$ the string's length grows.
+
+    Another explanation is that a string when $L_1$ can be $b$. Then, there's a recursive step $uba$ that converts the string to $bba$. To continue, there's a recursive step $uab$ that converts the string to $bbaab$. To get $bbaaba$, a recursive step $ua \in L$ would be required, but it does not exist, hence $bbaaba$ is not a part of $L$.
 
     **c.** Is the string $bbaaaabb$ in $L$? If so, trace how it is produced.
     If not, explain why not
 
-    bbaaaabb where ub where u = bbaaaab
+    The string $bbaaaabb$ is not a part of $L$. 
+    
+    According to the recursive step, the only possible option for $bbaaaaabb$ to occur is $ub \in L$ where $u = bbaaaab$.
+
+    Addittionally, a string when $L_1$ can be $b$. Then, there's a recursive step $uba$ that converts the string to $bba$. To get $bbaaaabb$, a recursive step $ua \in L$ would be required, but it does not exist, hence $bbaaaabb$ is not a part of $L$.
 
 5. Prove, using induction on the length of a string, that $(w^R)^R = w$ for all string $w \in \Sigma$
 
     _**SOLUTION:**_ <br>
     **I. Basis:** If $length(w) = 0$, then $w = \lambda$ and $\lambda^R = \lambda$ and $(\lambda^R)^R = \lambda$ <br>
-    pero si length(w) = 2 = ab entonces WR = ba y WRR = ab
-    **II. Inductive Hypothesis:** <br>
+    pero si length(w) = 2 = ab entonces WR = ba y WRR = ab <br>
+
+    **II. Inductive Hypothesis:** If $length(w) = n > 0$, then <br>
     **III. Inductive Step:** <br>
 
     basis - if length(w) = 0, then w = $\lambda$ and $\lambda^R$ = $\lambda$
