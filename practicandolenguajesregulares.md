@@ -117,13 +117,16 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 
     _**SOLUTION:**_ <br>
     **I. Basis:** If $length(w) = 0$, then $w = \lambda$ and $\lambda^R = \lambda$ and $(\lambda^R)^R = \lambda$ <br>
-    pero si length(w) = 2 = ab entonces WR = ba y WRR = ab <br>
 
-    **II. Inductive Hypothesis:** If $length(w) = n > 0$, then <br>
-    **III. Inductive Step:** <br>
+    **II. Inductive Hypothesis:** Let $w$ be a string of $length = n + 1$ where $a$ is the first character, $b$ is the last character, and $x$ is a string of $length n - 1$. Assume that $x \in \Sigma$
 
-    basis - if length(w) = 0, then w = $\lambda$ and $\lambda^R$ = $\lambda$
+    **III. Inductive Step:** Demonstrate that the hypothesis holds for strings of length $n + 1$. <br>
 
-    recursive step - if length(w) = n > 0, then u = wa, for some string w with length n-1 and a $\in \Sigma$, and $u^R = aw^R$
+    $(w^R)^R = ((axb)^R)^R$ <br>
+    $((axb)^R)^R = (b^Rxa^R)^R$ // definition of reversal <br>
+    $(b^Rxa^R)^R = (a^R)^Rx(b^R)^R$ // associativity of concatenation <br>
+    $(a^R)^R x (b^R)^R = (axb)$ // inductive hypothesis <br>
 
-    let u,v $\in \Sigma$*. then (uv)$^R$ = $v^Ru^R$
+    $\square$
+
+
