@@ -99,4 +99,7 @@ https://www.overleaf.com/learn/latex/List_of_Greek_letters_and_math_symbols
 5. Prove, using induction on the length of a string, that $(w^R)^R = w$ for all
    string $w \in \Sigma$
 
-    _**SOLUTION:**_
+    _**SOLUTION:**_ <br>
+    **I. Basis:** <br>
+    **II. Inductive Hypothesis:** <br>
+    **III. Inductive Step:** <br>
