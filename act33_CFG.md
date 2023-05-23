@@ -7,42 +7,32 @@
 <hr>
 <br>
 
-## Notación BNF
-### Modules
-\<module\> ::= defmodule <module_name> do <module_body> end
+# Notación BNF
+## **Modules**
+\<module\> ::= defmodule \<module_name\> do \<module_body\> end
 
-<module_name> ::= \<upp_identifier\>
+\<module_name\> ::= \<upp_identifier\>
 
-<module_body> ::= \<function\> | \<function\> <module_body>
+\<module_body\> ::= \<function\> | \<function\> \<module_body\>
 
 
-### Functions
+## **Functions**
 
-\<function\> ::= def <function_name> ( <func_arguments> ) do <function_body> end
+\<function\> ::= def \<function_name\> ( \<func_arguments\> ) do \<function_body\> end
 
-<function_name> ::= <low_identifier>
+\<function_name\> ::= \<low_identifier\>
 
-<func_arguments> ::= <low_identifier> | <identifier> , <func_arguments>
+\<func_arguments\> ::= \<low_identifier\> | \<identifier\> , \<func_arguments\>
 
-<function_body> ::= <expression> | <expression> <function_body>
+\<function_body\> ::= \<expression\> | \<expression\> \<function_body\>
 
-<expression> ::= <alphanumeric>*
+\<expression\> ::= \<alphanumeric\>*
 
-<!-- <expression> ::= <integer> | <string> | <boolean> | <variable> | <list> | <tuple>
-<integer> ::= <digit>+
-<string> ::= "<character>*"
-<boolean> ::= true | false
-<variable> ::= <identifier>
-<list> ::= [ <expression>* ]
-<tuple> ::= { <expression>* }
+## **General**
 
-<arguments> ::= <expression> | <expression> , <arguments> **
--->
-### General
+\<upp_identifier\> ::= \<upper_letter\> | \<upper_letter\> \<alphanumeric\>
 
-<upp_identifier> ::= <upper_letter> | <upper_letter> <alphanumeric>
-
-<low_identifier> ::= <lower_letter> | <lower_letter> <alphanumeric>
+\<low_identifier\> ::= \<lower_letter\> | \<lower_letter\> \<alphanumeric\>
 
 \<lower_letter\> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
 
@@ -53,15 +43,15 @@
 \<alphanumeric\> ::= \<lower_letter\> | \<upper_letter\> | \<digit\>
 
 ---
-## EBNF Notation
-### Modules
+# EBNF Notation
+## **Modules**
 MODULE ::== "defmodule" MODULE_NAME "do" MODULE_BODY "end"
 
 MODULE_NAME ::= UPP_IDENTIFIER
 
 MODULE_BODY ::= (FUNCTION | FUNCTION MODULE_BODY)
 
-### Functions
+## **Functions**
 
 FUNCTION ::== "def" FUNCTION_NAME '(' FUNC_ARGUMENTS ')' "do" FUNCTION_BODY "end"
 
@@ -73,7 +63,7 @@ FUNCTION_BODY ::= EXPRESSION | EXPRESSION FUNCTION_BODY
 
 EXPRESSION ::= { ALPHANUMERIC }
 
-### General
+## **General**
 
 UPP_IDENTIFIER ::= UPPER_LETTER | UPPER_LETTER ALPHANUMERIC
 
