@@ -64,11 +64,6 @@ Alina Rosas Macedo - A01252720
        [(char-alphabetic? char) (values 'var #f)]
        [(eq? char #\_) (values 'var #f)]
        [else (values 'inv #f)])]
-    ['assign (cond
-	[(char-numeric? char) (values 'int #f)]
-	[(char-alphabetic? char) (values 'var #f)]
-	[(eq? char #\space) (values 'space #f)]
-	[else (values 'inv #f)])
     ['int (cond
        [(char-numeric? char) (values 'int #f)]
        [(eq? char #\.) (values 'dot #f)]
@@ -91,7 +86,7 @@ Alina Rosas Macedo - A01252720
        [(char-numeric? char) (values 'exp #f)]
        [(or (eq? char #\+) (eq? char #\-)) (values 'e_sign #f)]
        [else (values 'inv #f)])]
-    ['e_sign (cond
+    ['e_sym (cond
        [(char-numeric? char) (values 'exp #f)]
        [else (values 'inv #f)])]
     ['exp (cond
@@ -99,9 +94,6 @@ Alina Rosas Macedo - A01252720
        [(char-operator? char) (values 'op 'exp)]
        [(eq? char #\space) (values 'spa 'exp)]
        [else (values 'inv #f)])]
-    ['paren (cond
-	[(char-operator char) (values 'op #f)]
-	['else (values 'inv #f)]
     ['var (cond
        [(char-alphabetic? char) (values 'var #f)]
        [(eq? char #\=) (values 'assign #f)]
@@ -116,11 +108,11 @@ Alina Rosas Macedo - A01252720
        [(eq? char #\_) (values 'var 'op)]
        [(eq? char #\space) (values 'op_spa 'op)]
        [else (values 'inv #f)])]
-     ['spa (cond
+     ['space (cond
        [(char-operator? char) (values 'op #f)]
        [(eq? char #\space) (values 'spa #f)]
        [else (values 'inv #f)])]
-    ['op_spa (cond
+    ['op_space (cond
        [(char-numeric? char) (values 'int #f)]
        [(char-alphabetic? char) (values 'var #f)]
        [(eq? char #\_) (values 'var #f)]
