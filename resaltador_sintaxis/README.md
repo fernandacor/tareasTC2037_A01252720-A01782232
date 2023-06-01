@@ -7,22 +7,23 @@ The elixir code already includes a css input file that defines the attributes of
 
 The first thing to do is to install the package that you will find in the documentation.
 
-Open Git Bash and type iex to launch the elixir shell.  
+1) Open Git Bash and type iex to launch the elixir shell.  
 
-Then you need to call the funtion:
+2) Call the funtion:
 
 ```elixir
 ResaltadorSintaxis.build()
 ```
 
-Every time a change is made you have to compile the file:
+3) Every time a change is made you have to compile the file:
 
 ```elixir
 recompile
 ```
-To test with different files, you have to change the file path inside the input_filename_path variable inside the elixir code.
 
-After each execution, in case there are no errors, an html file will be displayed with the syntax highlighter otherwise it will return an error.
+4) To test with different files, you have to change the file path inside the input_filename_path variable inside the elixir code.
+
+5) After each execution, in case there are no errors, an html file will be displayed with the syntax highlighter otherwise it will return an error.
 
 ## Installation
 
