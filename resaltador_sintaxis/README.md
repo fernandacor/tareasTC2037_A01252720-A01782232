@@ -48,3 +48,5 @@ This syntax highlighter is made for documents in the C# language since it is a l
 ## Algorithmic Complexity
 
 ## Ethical implementation
+
+We believe that when it comes to programming, there are many ethical issues that must be followed more than anything else because of the amount of information found on the Internet and the new AI tools. However, we believe that ethics is not necessarily at odds with this as developers forums are extremely useful when you are stuck on a file or can not solve a bug.  Therefore we consider that having open repositories with useful user manuals can promote collaboration and learning among developers, supporting each other from personal knowledge instead of having to turn to AI tools that are usually not very useful for these topics. This way we can learn by collaborating in a reliable and ethical manner.
