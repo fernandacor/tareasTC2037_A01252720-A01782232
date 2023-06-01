@@ -1,0 +1,38 @@
+body
+{
+    background-color: rgb(32, 32, 32);
+    font-family: "Courier New";
+    font-size: 14px;
+    color: white;
+}
+
+h1
+{
+    color: orange;
+    font-family: "Courier New";
+    font-size: 30px;
+    text-align: center;
+}
+
+.punctuation
+{
+    color: rgb(9, 242, 59);
+}
+
+.reserved
+{
+    color: rgb(121, 65, 205);
+}
+
+.cond
+{
+    color: rgb(196, 9, 140);
+}
+
+.builtinfunctions
+{
+    color: rgb(205, 228, 88);
+}
+
+
+
