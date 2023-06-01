@@ -1,6 +1,6 @@
 # ResaltadorSintaxis
-Fernanda Cantú
-Alina Rosas
+* Fernanda Cantú
+* Alina Rosas
 
 ## Instructions
 The elixir code already includes a css input file that defines the attributes of each lexical category to be highlighted and includes an html output file in which the result of the syntax highlighter will be displayed. 
