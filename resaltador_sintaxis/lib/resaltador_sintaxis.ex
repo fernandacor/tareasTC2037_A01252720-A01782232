@@ -1,45 +1,33 @@
 defmodule ResaltadorSintaxis do
-  @moduledoc """
-  Documentation for `ResaltadorSintaxis`.
-  """
 
-  @doc """
-  Hello world.
+  def build() do
+    input_file = "prueba_resaltador.cs"
+    output_file = "resaltadorsintaxis.html"
 
-  ## Examples
+    case File.read(input_file) do # Lee el archivo de cs
+      {:ok, content} -> #:ok = exito leyendo / content = donde se guarda el contenido del cs
+        highlighted_content =
+          content
+          |> highlight_punctuation()
+          |> highlight_reserved()
+          |> highlight_comments()
+          |> highlight_cond()
+          |> highlight_builtinfunctions()
+          |> highlight_numbers()
+          |> datatypes()
+          |> highlight_strings()
 
-      iex> ResaltadorSintaxis.hello()
-      :world
+        html_content = header_html() <> highlighted_content <> footer_html()
 
-  """
-  def build() do #FUNCIONA
-    input_file_path = "prueba_resaltador.cs" #FUNCIONA
-    output_file_path = "resaltadorsintaxis.html" #FUNCIONA
-
-    case File.read(input_file_path) do # Lee el archivo de cs #FUNCIONA
-      {:ok, content} -> #:ok = exito leyendo / content = donde se guarda el contenido del cs #FUNCIONA
-        highlighted_content = highlight_punctuation(content)
-        highlighted_content = highlight_reserved(highlighted_content)
-        highlighted_content = highlight_cond(highlighted_content)
-        highlighted_content = highlight_builtinfunctions(highlighted_content)
-
-        html_content = pre_html() <> highlighted_content <> post_html()
-
-        case File.write(output_file_path, html_content) do #FUNCIONA
-          :ok -> #if es exitoso: #FUNCIONA
-            IO.puts("Contenido del archivo CS ha sido impreso en el archivo HTML exitosamente.") #FUNCIONA
-
-          {:error, reason} -> #FUNCIONA
-            IO.puts("Error al escribir en el archivo HTML: #{reason}") #FUNCIONA
-        end #FUNCIONA
-
-      {:error, reason} -> #FUNCIONA
-        IO.puts("Error al leer el archivo CS: #{reason}") #FUNCIONA
-    end #FUNCIONA
-  end #FUNCIONA
+        case File.write(output_file, html_content) do
+          :ok -> #if es exitoso:
+            IO.puts("HTML generated correctly.")
+        end
+    end
+  end
 
   defp highlight_punctuation(content) do
-    punctuation_regex = ~r/(\(|\)|\{|\}|\[|\]|\,|\.|\;|\:)/
+    punctuation_regex = ~r/(\(|\)|\{|\}|\[|\]|\,|\;|\:|\=)/
     Regex.replace(punctuation_regex, content, "<span class=\"punctuation\">\\1</span>")
   end
 
@@ -54,29 +42,53 @@ defmodule ResaltadorSintaxis do
   end
 
   defp highlight_builtinfunctions(content) do
-    builtinfunctions_regex = ~r/(Start|Update|GetComponent|.FindGameObjectWithTag|OnTriggerEnter2D|.Log|.SetBool|Destroy)/
-    Regex.replace(builtinfunctions_regex, content, "<span class=\"builtinfunctions\">\\1</span>")
+    builtinfunctions_regex = ~r/(Start|Update|Play|GetComponent|FindGameObjectWithTag|OnTriggerEnter2D|Log|SetBool|Destroy|SetGameState)/
+    Regex.replace(builtinfunctions_regex, content, fn match -> "<span class=\"builtinfunctions\">#{match}</span>" end)
   end
 
-  defp pre_html() do #FUNCIONA
+  defp highlight_comments(content) do
+    comment_regex = ~r/(\/\/.*$|\/\*.*?\*\/)/m
+    Regex.replace(comment_regex, content, "<span class=\"comment\">\\1</span>")
+  end
+
+  defp highlight_numbers(content) do
+    # numbers_regex = ~r/(0|1|2|3|4|5|6|7|8|9)/
+    numbers_regex = ~r/(?<!\w)([0-9]+)(?!\w)/
+    Regex.replace(numbers_regex, content, "<span class=\"numbers\">\\1</span>")
+  end
+
+  defp datatypes(content) do
+    datatypes_regex = ~r/(int|float|double|bool|char|long|GameManager|AudioSource|Animator|GameObject|string|Sprite|Image)/
+    Regex.replace(datatypes_regex, content, "<span class=\"datatypes\">\\1</span>")
+  end
+
+  defp highlight_strings(content) do
+    string_regex = ~r/('[^']*')/
+    Regex.replace(string_regex, content, fn match -> "<span class=\"string\">#{match}</span>" end)
+  end
+
+  defp header_html() do
     """
     <!DOCTYPE html>
     <html>
       <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <title>Resaltador de Sintaxis</title>
         <link rel="stylesheet" href="resaltadorsintaxis.css">
       </head>
       <body>
+      <h1>Resaltador de Sintaxis para C#</h1>
+      <h3> Creado por: Fernanda Cantú A01782232 y Alina Rosas A01252720</h3>
+      <hr>
         <pre>
-    """ #FUNCIONA
-  end #FUNCIONA
+    """
+  end
 
-  defp post_html() do #FUNCIONA
+  defp footer_html() do
     """
         </pre>
       </body>
     </html>
-    """ #FUNCIONA
-  end #FUNCIONA
-end #FUNCIONA
+    """
+  end
+end

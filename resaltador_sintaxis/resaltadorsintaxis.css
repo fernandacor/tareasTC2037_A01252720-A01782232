@@ -1,22 +1,19 @@
+h1, h3
+{
+    color: rgb(255, 255, 255);
+}
+
 body
 {
     background-color: rgb(32, 32, 32);
     font-family: "Courier New";
     font-size: 14px;
-    color: white;
-}
-
-h1
-{
-    color: orange;
-    font-family: "Courier New";
-    font-size: 30px;
-    text-align: center;
+    color: rgb(157, 195, 239);
 }
 
 .punctuation
 {
-    color: rgb(9, 242, 59);
+    color: rgb(242, 118, 9);
 }
 
 .reserved
@@ -34,5 +31,23 @@ h1
     color: rgb(205, 228, 88);
 }
 
+.comment
+{
+    color: rgb(20, 118, 41);
+}
 
+.string
+{
+    color: rgb(254, 0, 0);
+}
+
+.numbers
+{
+    color: rgb(239, 165, 165);
+}
+
+.datatypes
+{
+    color: rgb(8, 176, 146);
+}
 

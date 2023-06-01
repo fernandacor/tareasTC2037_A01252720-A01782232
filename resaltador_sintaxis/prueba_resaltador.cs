@@ -1,53 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class OnTriggerAnimations : MonoBehaviour
+// Programa donde se aprecian la mayoría de los elementos resaltados
+// por el resaltador de síntaxis hecho en Elixir creado por
+// las mejores estudiantes Alina Rosas y Fernanda Cantú
+
+public class Prueba_Resaltador : MonoBehaviour
 {
-    // Elementos a buscar
-    private Animator animator;
-    private CharacterStats characterStats;
-    private GameObject trajeInicial;
-    private GameManager gameManager;
-
-    [SerializeField] private AudioSource muerteSFX; // Espacio para efecto de sonido
+    public int = 0123;
+    private string = 'Hola Prof :D'
+    public float = 0.123;
+    private bool granTrabajo = true;
 
     void Start()
     {
-        // Se buscan los elementos
-        animator = GetComponent<Animator>(); // animador
-        characterStats = GetComponent<CharacterStats>(); // script de stats del jugador
-        trajeInicial = GameObject.FindGameObjectWithTag("Traje"); // traje inicial
-
-        gameManager = GameManager.instance; // game manager
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Si el jugador choca con el objeto "Traje", se activa la animación de cambio de outfit, y se destruye el traje
-        if (collision.gameObject.tag == "Traje")
-        {
-            Debug.Log("Traje encontrado");
-            animator.SetBool("CambioOutfit", true);
-            Debug.Log("Animación de cambio de outfit activada");
-            Destroy(trajeInicial);
-        }
+        specialShot = GetComponent<SpecialShot>();
+        basicShot = GetComponent<BasicShot>();
     }
 
     void Update()
     {
-        // Si la salud del jugador es igual o menor a cero, se activa la animación y el sonido de muerte
-        if (characterStats.currentHealth <= 0)
+        if (granTrabajo == true)
         {
-            animator.SetBool("Death", true);
-            gameManager.SetGameState(GameState.Death);
-            muerteSFX.Play();
+            Debug.Log("¡¡Has hecho un gran trabajo!!");
+            return;
         }
         else
         {
-            gameManager.SetGameState(GameState.Playing); // Si el jugador sigue vivo, el juego sigue corriendo
+            Debug.Log("No te preocupes");
         }
     }
 }
-
-

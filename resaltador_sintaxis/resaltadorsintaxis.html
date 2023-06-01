@@ -1,65 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>Resaltador de Sintaxis</title>
     <link rel="stylesheet" href="resaltadorsintaxis.css">
   </head>
   <body>
+  <h1>Resaltador de Sintaxis para C#</h1>
+  <h3> Creado por: Fernanda Cantú A01782232 y Alina Rosas A01252720</h3>
+  <hr>
     <pre>
-<span class="cond">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">;</span>
-<span class="cond">using</span> System<span class="punctuation">.</span>Collections<span class="punctuation">.</span>Generic<span class="punctuation">;</span>
-<span class="cond">using</span> UnityEngine<span class="punctuation">;</span>
+<span class="cond">using</span> System.Collections<span class="punctuation">;</span>
+<span class="cond">using</span> System.Collections.Generic<span class="punctuation">;</span>
 
-<span class="reserved">public</span> class OnTriggerAnimations <span class="punctuation">:</span> <span class="reserved">MonoBehaviour</span>
+<span class="comment">// Programa donde se aprecian la mayoría de los elementos resaltados</span>
+<span class="comment">// por el resaltador de síntaxis hecho en Elixir creado por</span>
+<span class="comment">// las mejores estudiantes Alina Rosas y Fernanda Cantú</span>
+
+<span class="reserved">public</span> class Prueba_Resaltador <span class="punctuation">:</span> <span class="reserved">MonoBehaviour</span>
 <span class="punctuation">{</span>
-    // Elementos a buscar
-    <span class="reserved">private</span> Animator animator<span class="punctuation">;</span>
-    <span class="reserved">private</span> CharacterStats characterStats<span class="punctuation">;</span>
-    <span class="reserved">private</span> GameObject trajeInicial<span class="punctuation">;</span>
-    <span class="reserved">private</span> GameManager gameManager<span class="punctuation">;</span>
-
-    <span class="punctuation">[</span>SerializeField<span class="punctuation">]</span> <span class="reserved">private</span> AudioSource muerteSFX<span class="punctuation">;</span> // Espacio para efecto de sonido
+    <span class="reserved">public</span> <span class="datatypes">int</span> <span class="punctuation">=</span> <span class="numbers">0123</span><span class="punctuation">;</span>
+    <span class="reserved">private</span> <span class="datatypes">string</span> <span class="punctuation">=</span> <span class="string">'Hola Prof <span class="punctuation">:</span>D'</span>
+    <span class="reserved">public</span> <span class="datatypes">float</span> <span class="punctuation">=</span> <span class="numbers">0</span>.<span class="numbers">123</span><span class="punctuation">;</span>
+    <span class="reserved">private</span> <span class="datatypes">bool</span> granTrabajo <span class="punctuation">=</span> true<span class="punctuation">;</span>
 
     <span class="reserved">void</span> <span class="builtinfunctions">Start</span><span class="punctuation">(</span><span class="punctuation">)</span>
     <span class="punctuation">{</span>
-        // Se buscan los elementos
-        animator = <span class="builtinfunctions">GetComponent</span><Animator><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span> // animador
-        characterStats = <span class="builtinfunctions">GetComponent</span><CharacterStats><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span> // script de stats del jugador
-        trajeInicial = GameObject<span class="punctuation">.</span<span class="builtinfunctions">>FindGameObjectWithTag</span><span class="punctuation">(</span>"Traje"<span class="punctuation">)</span><span class="punctuation">;</span> // traje inicial
-
-        gameManager = GameManager<span class="punctuation">.</span>instance<span class="punctuation">;</span> // game manager
-    <span class="punctuation">}</span>
-
-    <span class="reserved">void</span> <span class="builtinfunctions">OnTriggerEnter2D</span><span class="punctuation">(</span>Collider2D collision<span class="punctuation">)</span>
-    <span class="punctuation">{</span>
-        // Si el jugador choca con el objeto "Traje"<span class="punctuation">,</span> se activa la animación de cambio de outfit<span class="punctuation">,</span> y se destruye el traje
-        <span class="cond">if</span> <span class="punctuation">(</span>collision<span class="punctuation">.</span>gameObject<span class="punctuation">.</span>tag == "Traje"<span class="punctuation">)</span>
-        <span class="punctuation">{</span>
-            Debug<span class="punctuation">.</span<span class="builtinfunctions">>Log</span><span class="punctuation">(</span>"Traje encontrado"<span class="punctuation">)</span><span class="punctuation">;</span>
-            animator<span class="punctuation">.</span<span class="builtinfunctions">>SetBool</span><span class="punctuation">(</span>"CambioOutfit"<span class="punctuation">,</span> true<span class="punctuation">)</span><span class="punctuation">;</span>
-            Debug<span class="punctuation">.</span<span class="builtinfunctions">>Log</span><span class="punctuation">(</span>"Animación de cambio de outfit activada"<span class="punctuation">)</span><span class="punctuation">;</span>
-            <span class="builtinfunctions">Destroy</span><span class="punctuation">(</span>trajeInicial<span class="punctuation">)</span><span class="punctuation">;</span>
-        <span class="punctuation">}</span>
+        specialShot <span class="punctuation">=</span> <span class="builtinfunctions">GetComponent</span><SpecialShot><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+        basicShot <span class="punctuation">=</span> <span class="builtinfunctions">GetComponent</span><BasicShot><span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
     <span class="punctuation">}</span>
 
     <span class="reserved">void</span> <span class="builtinfunctions">Update</span><span class="punctuation">(</span><span class="punctuation">)</span>
     <span class="punctuation">{</span>
-        // Si la salud del jugador es igual o menor a cero<span class="punctuation">,</span> se activa la animación y el sonido de muerte
-        <span class="cond">if</span> <span class="punctuation">(</span>characterStats<span class="punctuation">.</span>currentHealth <= 0<span class="punctuation">)</span>
+        <span class="cond">if</span> <span class="punctuation">(</span>granTrabajo <span class="punctuation">=</span><span class="punctuation">=</span> true<span class="punctuation">)</span>
         <span class="punctuation">{</span>
-            animator<span class="punctuation">.</span<span class="builtinfunctions">>SetBool</span><span class="punctuation">(</span>"Death"<span class="punctuation">,</span> true<span class="punctuation">)</span><span class="punctuation">;</span>
-            gameManager<span class="punctuation">.</span>SetGameState<span class="punctuation">(</span>GameState<span class="punctuation">.</span>Death<span class="punctuation">)</span><span class="punctuation">;</span>
-            muerteSFX<span class="punctuation">.</span>Play<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">;</span>
+            Debug.<span class="builtinfunctions">Log</span><span class="punctuation">(</span>"¡¡Has hecho un gran trabajo!!"<span class="punctuation">)</span><span class="punctuation">;</span>
+            return<span class="punctuation">;</span>
         <span class="punctuation">}</span>
         <span class="cond">else</span>
         <span class="punctuation">{</span>
-            gameManager<span class="punctuation">.</span>SetGameState<span class="punctuation">(</span>GameState<span class="punctuation">.</span>Playing<span class="punctuation">)</span><span class="punctuation">;</span> // Si el jugador sigue vivo<span class="punctuation">,</span> el juego sigue corriendo
+            Debug.<span class="builtinfunctions">Log</span><span class="punctuation">(</span>"No te preocupes"<span class="punctuation">)</span><span class="punctuation">;</span>
         <span class="punctuation">}</span>
     <span class="punctuation">}</span>
 <span class="punctuation">}</span>
-
-
     </pre>
   </body>
 </html>
