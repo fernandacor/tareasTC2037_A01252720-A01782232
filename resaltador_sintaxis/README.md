@@ -21,7 +21,7 @@ ResaltadorSintaxis.build()
 recompile
 ```
 
-4) To test with different files, you have to change the file path inside the input_filename_path variable inside the elixir code.
+4) To test with different files, you have to change the file path inside the `input_filename_path` variable inside the elixir code.
 
 5) After each execution, in case there are no errors, an html file will be displayed with the syntax highlighter otherwise it will return an error.
 
