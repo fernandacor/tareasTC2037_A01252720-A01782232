@@ -3,6 +3,7 @@
 # 14/06/2023
 
 defmodule Hw.Primes do
+
   def sum_primes(limit) do
     primes = find_primes(limit)
     Enum.sum(primes)
@@ -12,9 +13,10 @@ defmodule Hw.Primes do
     Enum.filter(2..limit, &is_prime/1)
   end
 
+  defp is_prime(n) when n <= 1, do: false
+  defp is_prime(n) when n <= 3, do: true
   defp is_prime(n) do
-    for i <- 2..trunc(:math.sqrt(n)), rem(n, i) == 0, do: false
-    true
+    not Enum.any?(2..(trunc(:math.sqrt(n))), fn x -> rem(n, x) == 0 end)
   end
 
   def sum_primes_parallel(limit, threads) do
@@ -36,4 +38,4 @@ defmodule Hw.Primes do
     Enum.filter(primes, &(&1 >= start))
     |> Enum.sum()
   end
-  end
+end
