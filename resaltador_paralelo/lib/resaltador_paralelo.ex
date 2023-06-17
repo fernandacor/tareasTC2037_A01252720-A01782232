@@ -1,19 +1,13 @@
 defmodule ResaltadorParalelo do
+  def parallel (files) do
+    input_files = files
+    |> Enum.map(&Task.async(fn -> build(&1) end))
+    |> Enum.map(&Task.await(&1))
+  end
 
   #def build(input_file) do
    # output_file = "resaltadorparalelo.html"
-    def build(input_file, output_file) do
-      data = input_file
-            |> File.stream!()
-            |> Enum.map(&readline/1)
-            |> Enum.join("")
-
-    def lexer(input_file, output_file) do
-      Enum.zip(in_file, output_file)
-      |> Enum.map(&Task.async(fn -> lexer(elem(&1, 0), elem(&1, 1)) end))
-      |> Enum.map(&Task.await/1)
-
-
+    def build(input_file) do
     case File.read(input_file) do # Lee el archivo de cs
       {:ok, content} -> #:ok = exito leyendo / content = donde se guarda el contenido del cs
         highlighted_content =
