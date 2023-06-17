@@ -1,3 +1,6 @@
+// Actividad Integradora 3.4 - Archivo de Prueba en C# para el Resaltador de Sintaxis
+// Fernanda Cantú A01782232 & Alina Rosas A01252720
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
