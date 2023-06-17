@@ -1,0 +1,60 @@
+/* Actividad Integradora 3.4 - CSS para resaltador de sintaxis
+Fernanda Cantú A01782232 & Alina Rosas A01252720 */
+
+h1, h3
+{
+    color: rgb(255, 255, 255);
+}
+
+body
+{
+    background-color: rgb(32, 32, 32);
+    font-family: "Courier New";
+    font-size: 14px;
+    color: rgb(157, 195, 239);
+}
+
+.punctuation
+{
+    color: rgb(242, 118, 9);
+}
+
+.reserved
+{
+    color: rgb(121, 65, 205);
+}
+
+.cond
+{
+    color: rgb(196, 9, 140);
+}
+
+.builtinfunctions
+{
+    color: rgb(205, 228, 88);
+}
+
+.comment
+{
+    color: rgb(20, 118, 41);
+}
+
+.string
+{
+    color: rgb(254, 0, 0);
+}
+
+.numbers
+{
+    color: rgb(255, 161, 161);
+}
+
+.datatypes, .functions, .variables
+{
+    color: rgb(8, 176, 146);
+}
+
+.string
+{
+    color: rgb(59, 59, 59);
+}
