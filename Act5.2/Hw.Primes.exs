@@ -46,7 +46,7 @@ defmodule Hw.Primes do
     |> Enum.sum()
   end
 
-  # Function that calculates the time it takes to sum all the prime numbers sequentially
+  #Function that calculates the time it takes to sum all the prime numbers sequentially
   def seq_prime_sum() do
     {time, result} = :timer.tc(fn -> Hw.Primes.sum_primes(2, 5000000) end)
     IO.puts("Time when sequential: #{time}")
@@ -72,12 +72,10 @@ defmodule Hw.Primes do
   end
 end
 
-# {time, result} = :timer.tc(fn -> Hw.Primes.sum_primes(2, 10000) end)
+# {time, result} = :timer.tc(fn -> Hw.Primes.sum_primes(2, 5000000) end)
 # IO.puts("Time when sequential: #{time}")
 # IO.puts("Sequential result: #{result}")
 
-# {time, result} = :timer.tc(fn -> Hw.Primes.sum_primes_parallel(1, 10000, 8) end)
+# {time, result} = :timer.tc(fn -> Hw.Primes.sum_primes_parallel(1, 5000000, 8) end)
 # IO.puts("Time when parallel with 8 cores: #{time}")
 # IO.puts("Parallel result: #{result}")
-
-
