@@ -1,13 +1,13 @@
 # Activity 3.4 - Syntax Highlighter
 # Fernanda Cantú A01782232 & Alina Rosas A01252720
 
-@doc """
+defmodule ResaltadorSintaxis do
+  @doc """
   The program receives a file with C# code and returns an HTML file with the same code but with syntax highlighting.
   The program uses regular expressions to identify the different elements of the code and then replace them with the
   corresponding HTML tags.
   """
 
-defmodule ResaltadorSintaxis do
   # Function that receives the name of the input file and builds the output file
   def lexer(input_file) do
     output_file = "resaltadorsintaxis.html"
@@ -106,3 +106,6 @@ defmodule ResaltadorSintaxis do
     """
   end
 end
+
+# {time} = :timer.tc(fn -> ResaltadorSintaxis.lexer("prueba_resaltador.cs") end)
+# IO.puts("Time when sequential: #{time}")
