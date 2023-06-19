@@ -1,8 +1,14 @@
-# Actividad Integradora 3.4 - Resaltador de Sintaxis
+# Activity 3.4 - Syntax Highlighter
 # Fernanda Cantú A01782232 & Alina Rosas A01252720
 
+@doc """
+  The program receives a file with C# code and returns an HTML file with the same code but with syntax highlighting.
+  The program uses regular expressions to identify the different elements of the code and then replace them with the
+  corresponding HTML tags.
+  """
+
 defmodule ResaltadorSintaxis do
-  # Función que recibe el nombre del archivo de entrada y construye el archivo de salida
+  # Function that receives the name of the input file and builds the output file
   def lexer(input_file) do
     output_file = "resaltadorsintaxis.html"
 
@@ -12,7 +18,7 @@ defmodule ResaltadorSintaxis do
     File.write(output_file, footer_html(), [:append])
   end
 
-  # Función para leer el documento línea por línea
+  # Function that reads the document line by line
   defp highlighter(content, output_file) do
     content
     |> String.split("\n")
@@ -20,7 +26,7 @@ defmodule ResaltadorSintaxis do
     |> Enum.map(fn line -> check_line(line, output_file) end)
   end
 
-  # Función para checar cada línea y ver si hay coincidencias con las expresiones regulares
+  # Function to check each line and see if there are matches with the regular expressions
   defp check_line("", output_file), do: File.write(output_file, "<br>", [:append])
   defp check_line(line, output_file) do
     comment_regex = ~r/^(\/\/.*$|\/\*.*?\*\/)/m
@@ -64,7 +70,7 @@ defmodule ResaltadorSintaxis do
     end
   end
 
-  # Función para construir el archivo de salida
+  # Function to build the output file
   defp build(line, regex, class, output_file) do
     [hd|_] = Regex.run(regex, line)
     span_replace = "<span class=\"#{class}\">#{hd}</span>"
@@ -73,7 +79,7 @@ defmodule ResaltadorSintaxis do
     check_line(line, output_file)
   end
 
-  # Funcion que contiene el header del documento HTML
+  # Function that contains the header for the HTML document
   defp header_html() do
     """
     <!DOCTYPE html>
@@ -91,7 +97,7 @@ defmodule ResaltadorSintaxis do
     """
   end
 
-  # Funcion que contiene el footer del documento HTML
+  # Function that contains the footer for the HTML document
   defp footer_html() do
     """
       </pre>
