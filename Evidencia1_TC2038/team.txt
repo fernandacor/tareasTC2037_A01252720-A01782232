@@ -1,0 +1,8 @@
+INTEGRANTES DEL EQUIPO:
+Alina Rosas Macedo A01252720
+Fernanda Cantú Ortega A01782232
+
+// en este archivo nos piden:
+// "Incluye un archivo team.txt que incluya los nombres de todos los 
+// integrantes del equipo, con sus matrículas y las partes específicas 
+// del proyecto en las que trabajó cada quien
