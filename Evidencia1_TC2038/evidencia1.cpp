@@ -1,45 +1,168 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-void leerArchivos(string archT, string archM)
+void leerArchivos(const vector<string> archivosTransmision, const vector<string> archivosMCode)
 {
-    ifstream archivoTransmision(archT);
-    ifstream archivoMCode(archM);
-    string lineaT, lineaM;
-
-    string contenidoArchM;
-    while (getline(archivoMCode, lineaM)) 
+    for (size_t i = 0; i < archivosTransmision.size(); i++)
     {
-        contenidoArchM += lineaM;
+        for (size_t j = 0; j < archivosMCode.size(); j++)
+        {
+            ifstream archivoTransmision(archivosTransmision[i]);
+            ifstream archivoMCode(archivosMCode[j]);
+            string lineaT, lineaM;
+
+            string contenidoTransmision;
+            while (getline(archivoTransmision, lineaT))
+            {
+                contenidoTransmision += lineaT;
+            }
+
+            string contenidoMCode;
+            while (getline(archivoMCode, lineaM))
+            {
+                contenidoMCode += lineaM;
+            }
+
+            size_t posicion = contenidoTransmision.find(contenidoMCode);
+            string resultado = (posicion != string::npos ? "true " + to_string(posicion) : "false");
+            cout << resultado << endl;
+        }
     }
+    cout << endl;
+}
+
+void encontrarPalindromo(string arch)
+{
+    ifstream archivoTransmision(arch);
+    string lineaT;
 
     string contenidoArchivoT;
-    size_t found;
-    size_t posicion = 1;
-    size_t contador = 0;
-    while (getline(archivoTransmision, lineaT)) 
+    while (getline(archivoTransmision, lineaT))
     {
         contenidoArchivoT += lineaT;
-        found = contenidoArchivoT.find(contenidoArchM);
-        if (found != string::npos) 
-        {
-            cout << "true " << posicion + found << endl;
-            return;
-        }
-        posicion += lineaT.length();
-        contador++;
     }
-    cout << "false" << endl;
+
+    int inicio = 0;
+    int longitud = 1;
+
+    for (int i = 1; i < contenidoArchivoT.length(); i++)
+    {
+        int j = 1;
+
+        // Para substrings de longitud impar
+        while (i - j >= 0 && i + j < contenidoArchivoT.length() && contenidoArchivoT[i - j] == contenidoArchivoT[i + j])
+        {
+            j++;
+        }
+
+        if (2 * j - 1 > longitud)
+        {
+            longitud = 2 * j - 1;
+            inicio = i - j + 1;
+        }
+
+        j = 0;
+
+        // Para substring de longitud par
+        while (i - j - 1 >= 0 && i + j < contenidoArchivoT.length() && contenidoArchivoT[i - j - 1] == contenidoArchivoT[i + j])
+        {
+            j++;
+        }
+
+        if (2 * j > longitud)
+        {
+            longitud = 2 * j;
+            inicio = i - j;
+        }
+    }
+
+    if (longitud > 1)
+    {
+        cout << inicio << " " << inicio + longitud - 1 << endl;
+    }
+    else
+    {
+        cout << "false" << endl;
+    }
+}
+
+void compararTextos(string archT1, string archT2)
+{
+    ifstream archivoTransmision1(archT1);
+    ifstream archivoTransmision2(archT2);
+    string lineaT1, lineaT2;
+
+    string contenidoArchivoT1;
+    while (getline(archivoTransmision1, lineaT1))
+    {
+        contenidoArchivoT1 += lineaT1;
+    }
+
+    string contenidoArchivoT2;
+    while (getline(archivoTransmision2, lineaT2))
+    {
+        contenidoArchivoT2 += lineaT2;
+    }
+
+    int maxLongitud = 0;
+    int posicionInicio = -1;
+    int posicionFinal = -1;
+
+    for (int i = 0; i < contenidoArchivoT1.length(); i++)
+    {
+        for (int j = 0; j < contenidoArchivoT2.length(); j++)
+        {
+            int longitud = 0;
+            while (i + longitud < contenidoArchivoT1.length() &&
+                   j + longitud < contenidoArchivoT2.length() &&
+                   contenidoArchivoT1[i + longitud] == contenidoArchivoT2[j + longitud])
+            {
+                longitud++;
+            }
+
+            if (longitud > maxLongitud)
+            {
+                maxLongitud = longitud;
+                posicionInicio = i;
+                posicionFinal = i + longitud - 1;
+            }
+        }
+    }
+
+    if (maxLongitud > 0)
+    {
+        cout << posicionInicio + 1 << " " << posicionFinal + 1 << endl;
+    }
+    else
+    {
+        cout << "No se encontró un substring común entre los archivos" << endl;
+    }
 }
 
 int main()
 {
+    vector<string> archivosTransmision;
+    archivosTransmision.push_back("transmission1.txt");
+    archivosTransmision.push_back("transmission2.txt");
+
+    vector<string> archivosMCode;
+    archivosMCode.push_back("mcode1.txt");
+    archivosMCode.push_back("mcode2.txt");
+    archivosMCode.push_back("mcode3.txt");
+
     cout << "PARTE 1" << endl;
-    leerArchivos("transmission2.txt", "mcode2.txt");
-    cout << endl << "PARTE 2" << endl;
+    leerArchivos(archivosTransmision, archivosMCode);
+    cout << "PARTE 2" << endl;
+    encontrarPalindromo("transmission1.txt");
+    encontrarPalindromo("transmission2.txt");
+
+    cout << endl
+         << "PARTE 3" << endl;
+    compararTextos("transmission1.txt", "transmission2.txt");
     return 0;
 }
 
@@ -52,5 +175,5 @@ int main()
 // Output: (true | false) <posicion>
 // PARTE 2
 // PARTE 3
-// el programa analiza que tan similares son los archivos de transmision y muestra la posicion inicial y posicion final 
+// el programa analiza que tan similares son los archivos de transmision y muestra la posicion inicial y posicion final
 // del primer archivo en donde se encuentra el substring más largo común entre ambos archivos de tranmisión
