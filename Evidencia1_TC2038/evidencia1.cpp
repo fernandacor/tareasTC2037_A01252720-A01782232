@@ -128,33 +128,31 @@ void compararTextos(string archT1, string archT2)
         contenidoArchivoT2 += lineaT2;
     }
 
-    // Iteradores para encontrar el substring más largo en común
+    // Variables para guardar la longitud de los archivos de transmisión
+    int n = contenidoArchivoT1.length();
+    int m = contenidoArchivoT2.length();
+
+    // Generar una matriz de n+1 x m+1 para guardar los valores de la longitud del substring más largo
+    vector<vector<int> > LCS(n+1, vector<int>(m+1, 0));
+
+    // Variables para guardar la longitud del substring más largo y su posición de inicio
     int maxLongitud = 0;
-    int posicionInicio = -1;
-    int posicionFinal = -1;
+    int posicionInicio = 0;
 
     // Ciclos for anidados para recorrer cada uno de los archivos de transmisión
-    for (int i = 0; i < contenidoArchivoT1.length(); i++)
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < contenidoArchivoT2.length(); j++)
+        for (int j = 0; j < m; j++)
         {
-            // La longitud comienza en 0
-            int longitud = 0;
-
-            // Se compara cada caracter de los archivos de transmisión
-            while (i + longitud < contenidoArchivoT1.length() &&
-                   j + longitud < contenidoArchivoT2.length() &&
-                   contenidoArchivoT1[i + longitud] == contenidoArchivoT2[j + longitud])
+            if(contenidoArchivoT1[i-1] == contenidoArchivoT2[j-1])
             {
-                longitud++;
-            }
-
-            // Si la longitud es mayor a la longitud máxima, se actualiza la longitud máxima y las posiciones
-            if (longitud > maxLongitud)
-            {
-                maxLongitud = longitud;
-                posicionInicio = i;
-                posicionFinal = i + longitud - 1;
+                // LCS = Longest Common String
+                LCS[i][j] = LCS[i-1][j-1] + 1;
+                if (LCS[i][j] > maxLongitud)
+                {
+                    maxLongitud = LCS[i][j];
+                    posicionInicio = i - maxLongitud;
+                }
             }
         }
     }
@@ -162,11 +160,12 @@ void compararTextos(string archT1, string archT2)
     // Condicional para imprimir el resultado
     if (maxLongitud > 0)
     {
+        int posicionFinal = posicionInicio + maxLongitud - 1;
         cout << posicionInicio + 1 << " " << posicionFinal + 1 << endl;
     }
     else
     {
-        cout << "No se encontró un substring común entre los archivos" << endl;
+        cout << "No se encontró ningún substring entre los archivos" << endl;
     }
 }
 
