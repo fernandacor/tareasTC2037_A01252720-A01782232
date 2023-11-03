@@ -2,7 +2,9 @@ INTEGRANTES DEL EQUIPO:
 Alina Rosas Macedo A01252720
 Fernanda Cantú Ortega A01782232
 
-// en este archivo nos piden:
-// "Incluye un archivo team.txt que incluya los nombres de todos los 
-// integrantes del equipo, con sus matrículas y las partes específicas 
-// del proyecto en las que trabajó cada quien
+Para el desarrollo de este proyecto, Fernanda se enfocó en la primera parte, la cuál busca si existe código malicioso dentro de los archivos 
+de transmisión, y si sí se imprimen las posiciones.
+Alina, por otro lado, se enfocó en la tercera parte, donde se busca las posiciones del substring más largo que tienen en común los archivos de
+transmisión.
+Para la segunda parte, donde se buscan los palíndromos, las integrantes del equipo decidieron trabajar juntas y unir sus conocimientos, pues fue
+la parte que más complicada les pareció.
