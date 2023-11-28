@@ -1,4 +1,4 @@
-4 // Número N que representa el número de colonias en la ciudad
+4
 
 // Matriz cuadrada de N x N que representa el grafo con las distancias en km entre las colonias de la ciudad
 0 16 45 32
