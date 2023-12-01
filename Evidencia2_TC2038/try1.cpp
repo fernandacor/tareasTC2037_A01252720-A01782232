@@ -5,8 +5,12 @@
 //Líbrerias a utilizar
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <vector>
 #include <algorithm>
+#include <climits>
+#include <cmath>
+#include <queue>
 
 using namespace std;
 
@@ -121,9 +125,73 @@ vector<Edge> kruskalMST(Graph graph) {
     return result;
 }
 
+int start_x = 0; // Coordenada x de inicio
+int start_y = 0; // Coordenada y de inicio
+int goal_x = 3;  // Coordenada x de destino
+int goal_y = 3;  // Coordenada y de destino
+
+// Utilizando branch and bound
+vector<pair<int, int> > branchAndBound(vector<vector<int> > &matrizCiudad, int x, int y, int goal_x, int goal_y)
+{
+    // Definir las posibles direcciones (derecha, izquierda, arriba, abajo)
+    int dx[] = {0, 1, 0, -1};
+    int dy[] = {1, 0, -1, 0};
+    
+    // Encontrar un camino
+    int M = matrizCiudad.size();
+    int N = matrizCiudad[0].size();
+
+    vector<vector<int> > solucionBranchAndBound(M, vector<int>(N));
+
+    priority_queue<pair<int, pair<int, int> > > pq;
+
+    vector<pair<int, int> > ruta;
+
+
+    int distanciaFaltante = sqrt((x - goal_x) * (x - goal_x) + (y - goal_y) * (y - goal_y));
+    int estimadorInicial = distanciaFaltante;
+
+    pq.push(make_pair(-estimadorInicial, make_pair(x, y)));
+
+    while (!pq.empty()) 
+    {
+        // Obtener las coordenadas actuales
+        int i = pq.top().second.first;
+        int j = pq.top().second.second;
+        int cost = -pq.top().first;
+        pq.pop();
+
+        // Marcar la casilla actual como visitada
+        solucionBranchAndBound[i][j] = 1;
+
+        ruta.push_back(make_pair(i, j));
+
+        if (i == goal_x && j == goal_y)
+        {
+            return ruta;
+        }
+
+        for (int dir = 0; dir < 4; dir++) 
+        {
+            int ni = i + dx[dir];
+            int nj = j + dy[dir];
+
+            // Verificar si la nueva casilla es válida
+            if (ni >= 0 && ni < M && nj >= 0 && nj < N && matrizCiudad[ni][nj] == 1 && solucionBranchAndBound[ni][nj] == 0) 
+            {
+                int nuevoCosto = cost + 1;
+                // Agregar la casilla a la cola para explorarla más tarde
+                pq.push(make_pair(-nuevoCosto, make_pair(ni, nj)));
+            }
+        }
+    }
+    return ruta;
+}
+
+
 
 int main() {
-    string nombreArchivo = "grafo.txt"; // Nombre del archivo con la matriz de adyacencias
+    string nombreArchivo = "input.txt"; // Nombre del archivo con la matriz de adyacencias
     vector<Coordenada> centrales;
     vector<vector<int> > matrizCiudad = leerArchivo(nombreArchivo, centrales);
 
@@ -148,6 +216,10 @@ int main() {
         for (Edge edge : MST) {
             cout << edge.src << " - " << edge.dest << " : " << edge.weight << endl;
         }
+
+        vector<pair<int, int> > ruta = branchAndBound(matrizCiudad, start_x, start_y, goal_x, goal_y);
+        Coordenada nuevaContratacion = {2, 2};
+        cout << "Nueva contratación: " << nuevaContratacion.x << ", " << nuevaContratacion.y << endl;
 
     }
 
