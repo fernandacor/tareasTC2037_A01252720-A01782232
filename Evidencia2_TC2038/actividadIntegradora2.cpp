@@ -51,14 +51,14 @@ struct Ruta {
 };
 
 // Función para leer el archivo que contiene la matriz de adyacencia y coordenadas de las centrales
-vector<vector<int>> leerArchivo(const string archivo, vector<Coordenada> &centrales) {
+vector<vector<int> > leerArchivo(const string archivo, vector<Coordenada> &centrales) {
     ifstream inputFile(archivo);
 
     int N;
     inputFile >> N;
     cout << "N: " << N << endl;
 
-    vector<vector<int>> matrizCiudad(N, vector<int>(N));
+    vector<vector<int> > matrizCiudad(N, vector<int>(N));
 
     // Leer la matriz de adyacencia
     cout << "Matriz de adyacencia: " << endl;
@@ -85,6 +85,7 @@ vector<vector<int>> leerArchivo(const string archivo, vector<Coordenada> &centra
 }
 
 // Algoritmo de Kruskal para encontrar el árbol de expansión mínima (MST)
+// Complejidad: O(n log m)
 struct minExpTree {
     vector<int> padre, rango;
 
@@ -121,6 +122,7 @@ struct minExpTree {
 };
 
 // Función para ejecutar el algoritmo de Kruskal y obtener el MST
+// Complejidad: O(n log m)
 vector<Aristas> kruskalMST(Grafo grafo) {
     cout << "Parte 1: Kruskal" << endl;
     vector<Aristas> result;
@@ -142,8 +144,8 @@ vector<Aristas> kruskalMST(Grafo grafo) {
 }
 
 // Función auxiliar para encontrar la ruta más corta utilizando backtracking
-void backtracking(vector<vector<int>> &grafo, int start, int current, int visited, Ruta &currentRoute, Ruta &shortestRoute) {
-    cout << "Parte 2: Backtracking" << endl;
+// Complejidad: O(n!)
+void backtracking(vector<vector<int> > &grafo, int start, int current, int visited, Ruta &currentRoute, Ruta &shortestRoute) {
     if (visited == ((1 << grafo.size()) - 1)) {
         if (grafo[current][start] != 0) {
             currentRoute.length += grafo[current][start];
@@ -169,7 +171,8 @@ void backtracking(vector<vector<int>> &grafo, int start, int current, int visite
 }
 
 // Función principal para encontrar la ruta más corta que visita cada colonia exactamente una vez
-Ruta findShortestRoute(vector<vector<int>> &grafo) {
+// Complejidad: O(n!)
+Ruta findShortestRoute(vector<vector<int> > &grafo) {
     Ruta shortestRoute;
     shortestRoute.length = INT_MAX;
 
@@ -189,6 +192,7 @@ double calcularDistancia(const Coordenada &punto1, const Coordenada &punto2) {
 }
 
 // Función para encontrar la central más cercana a una nueva contratación
+// Complejidad: O(n)
 int encontrarCentralMasCercana(const Coordenada &nuevaContratacion, const vector<Coordenada> &centrales) {
     int indiceCentralMasCercana = -1;
     double distanciaMinima = numeric_limits<double>::max();
@@ -208,7 +212,7 @@ int main() {
     // Nombre del archivo con la matriz de adyacencias
     string nombreArchivo = "input.txt";
     vector<Coordenada> centrales;
-    vector<vector<int>> matrizCiudad = leerArchivo(nombreArchivo, centrales);
+    vector<vector<int> > matrizCiudad = leerArchivo(nombreArchivo, centrales);
 
     // Verificar si la lectura del archivo fue exitosa
     if (!matrizCiudad.empty()) {
@@ -229,28 +233,36 @@ int main() {
 
         // Imprimir el árbol de expansión mínima (MST)
         for (Aristas edge : MST) {
-            cout << edge.inicio << " - " << edge.final << " : " << edge.weight << endl;
+            cout << (char)(edge.inicio + 65) << " - " << (char)(edge.final + 65) << " : " << edge.weight << endl;
         }
     }
 
     // Utilizar la matriz de adyacencia para encontrar la ruta más corta
-    vector<vector<int>> matrizAdyacencia = matrizCiudad;
+    vector<vector<int> > matrizAdyacencia = matrizCiudad;
     Ruta shortestRoute = findShortestRoute(matrizAdyacencia);
 
     // Imprimir la ruta más corta y su longitud
+    cout << "Parte 2: Backtracking" << endl;
     cout << "Ruta mas corta: ";
     for (int node : shortestRoute.path) {
-        cout << node << " ";
+        cout << (char)(node + 65) << " ";
     }
     cout << endl;
     cout << "Distancia: " << shortestRoute.length << endl;
 
-    // Encontrar la central más cercana a una nueva contratación
-    Coordenada nuevaContratacion = {0, 9};
+    // Pedir al usuario las coordenadas de la nueva contratación
+    cout << "Ingrese las coordenadas de la nueva contratación: " << endl;
+    int x, y;
+    cout << "x: ";
+    cin >> x;
+    cout << "y: ";
+    cin >> y;
+    Coordenada nuevaContratacion = {x, y};
     int indiceMasCercano = encontrarCentralMasCercana(nuevaContratacion, centrales);
 
+    cout << "Parte 3: Encontrar central mas cercana" << endl;
     if (indiceMasCercano != -1) {
-        cout << "Central mas cercana a nueva contratacion: " << indiceMasCercano << endl;
+        cout << "Central mas cercana a nueva contratacion: " << (char)(indiceMasCercano + 65) << endl;
         cout << "Coordenadas de central más cercana: (" << centrales[indiceMasCercano].x << ", " << centrales[indiceMasCercano].y << ")" << endl;
     }
 
