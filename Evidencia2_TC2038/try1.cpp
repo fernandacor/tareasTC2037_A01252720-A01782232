@@ -1,3 +1,8 @@
+// Evidencia 2: Actividad Integradora
+// Alina Rosas Macedo A01252720 y Fernanda Cantú Ortega A01782232
+// 30/11/2023
+
+//Líbrerias a utilizar
 #include <iostream>
 #include <fstream>
 #include <vector>
