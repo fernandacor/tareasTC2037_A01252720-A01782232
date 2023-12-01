@@ -2,10 +2,9 @@
 // Alina Rosas Macedo A01252720 y Fernanda Cantú Ortega A01782232
 // 30/11/2023
 
-//Líbrerias a utilizar
+// Librerías a utilizar
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <vector>
 #include <algorithm>
 #include <climits>
@@ -14,14 +13,45 @@
 
 using namespace std;
 
-struct coordenadas { int x, y;};
+// Definición de estructuras
 
-vector<vector<int>> matrizCiudad;
+// Estructura para almacenar coordenadas (x, y)
+struct Coordenada {
+    int x, y;
+};
 
-// Leer un archivo de entrada que contiene la información de un grafo representado en forma de una matriz de adyacencia
-// con grafos ponderados. El peso de cada arista es la distancia en km entre colonia y colonia, por donde se puede meter cableado
-vector<vector<int>> leerArchivo(const string archivo, vector<coordenadas> &centrales)
-{
+// Estructura para representar aristas en el grafo
+struct Aristas {
+    int inicio, final, weight;
+};
+
+// Estructura para representar un grafo
+struct Grafo {
+    int V;
+    vector<Aristas> edges;
+
+    Grafo(int V) : V(V) {}
+
+    // Método para agregar aristas al grafo
+    void add_aristas(int inicio, int final, int weight) {
+        Aristas edge = {inicio, final, weight};
+        edges.push_back(edge);
+    }
+};
+
+// Función de comparación para ordenar aristas por peso
+bool compararAristas(const Aristas &a, const Aristas &b) {
+    return a.weight < b.weight;
+}
+
+// Estructura para representar una ruta en el grafo
+struct Ruta {
+    vector<int> path;
+    int length;
+};
+
+// Función para leer el archivo que contiene la matriz de adyacencia y coordenadas de las centrales
+vector<vector<int>> leerArchivo(const string archivo, vector<Coordenada> &centrales) {
     ifstream inputFile(archivo);
 
     int N;
@@ -32,158 +62,197 @@ vector<vector<int>> leerArchivo(const string archivo, vector<coordenadas> &centr
 
     // Leer la matriz de adyacencia
     cout << "Matriz de adyacencia: " << endl;
-    for (int i = 0; i < N; ++i)
-    {
-        for (int j = 0; j < N; ++j)
-        {
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
             inputFile >> matrizCiudad[i][j];
             cout << matrizCiudad[i][j] << " ";
         }
         cout << endl;
     }
 
-
     // Leer las coordenadas de las centrales
     cout << "Coordenadas de las centrales: " << endl;
-    for (int i = 0; i < N; ++i)
-    {
+    for (int i = 0; i < N; ++i) {
         int x, y;
         inputFile >> x >> y;
-        centrales.push_back({x, y});
-        cout <<"x: " << x << ", y: " << y << endl;
+        centrales.push_back(Coordenada());
+        centrales.back().x = x;
+        centrales.back().y = y;
+        cout << "x: " << x << ", y: " << y << endl;
     }
 
     return matrizCiudad;
 }
 
-// El programa debe desplegar cuál es la forma optima de cablear con fibra optica conectando colonias de tal forma que se
-// pueda compartir información entre cuales quiera dos colonias
+// Algoritmo de Kruskal para encontrar el árbol de expansión mínima (MST)
+struct minExpTree {
+    vector<int> padre, rango;
 
-// Utilizando el algoritmo de kruskal
-void cableadoOptimo(vector<vector<int>> matrizCiudad, int n)
-{
-    return;
-}
+    minExpTree(int n) {
+        padre.resize(n);
+        rango.resize(n);
 
-// Cuál es la ruta más corta posible que visita cada colonia una vez y al finalizar regresa a la colonia origen?
-// El programa debe desplegar la ruta a considerar, tomando en cuenta que la primera ciudad es A, la segunda B, y así
-// La empresa quiere conocer el flujo máximo de información del nodo inicial al nodo final. Esto tmbn debe desplegarse
-
-// Utilizando branch and bound
-vector<pair<int, int>> branchAndBound(vector<vector<int>> &matrizCiudad, int x, int y, int goal_x, int goal_y)
-{
-    // Definir las posibles direcciones (derecha, izquierda, arriba, abajo)
-    int dx[] = {0, 1, 0, -1};
-    int dy[] = {1, 0, -1, 0};
-    
-    // Encontrar un camino
-    int M = matrizCiudad.size();
-    int N = matrizCiudad[0].size();
-
-    vector<vector<int>> solucionBranchAndBound(M, vector<int>(N));
-
-    priority_queue<pair<int, pair<int, int>>> pq;
-
-    vector<pair<int, int>> ruta;
-
-
-    int distanciaFaltante = sqrt((x - goal_x) * (x - goal_x) + (y - goal_y) * (y - goal_y));
-    int estimadorInicial = distanciaFaltante;
-
-    pq.push({-estimadorInicial, {x, y}});
-
-    while (!pq.empty()) 
-    {
-        // Obtener las coordenadas actuales
-        int i = pq.top().second.first;
-        int j = pq.top().second.second;
-        int cost = -pq.top().first;
-        pq.pop();
-
-        // Marcar la casilla actual como visitada
-        solucionBranchAndBound[i][j] = 1;
-
-        ruta.push_back({i, j});
-
-        if (i == goal_x && j == goal_y)
-        {
-            return ruta;
-        }
-
-        for (int dir = 0; dir < 4; dir++) 
-        {
-            int ni = i + dx[dir];
-            int nj = j + dy[dir];
-
-            // Verificar si la nueva casilla es válida
-            if (ni >= 0 && ni < M && nj >= 0 && nj < N && matrizCiudad[ni][nj] == 1 && solucionBranchAndBound[ni][nj] == 0) 
-            {
-                int nuevoCosto = cost + 1;
-                // Agregar la casilla a la cola para explorarla más tarde
-                pq.push({-nuevoCosto, {ni, nj}});
-            }
-        }
-    }
-    return ruta;
-}
-
-// Teniendo en cuenta la ubicación geográfica de varias centrales a las que se pueden conectar nuevas casas, la empresa quiere
-// contar con una forma de decidir, dada una nueva contratación del servicio, cuál es la central geográficamente más cercana
-// a esa nueva contratación. No necesariamente hay una central por cada colonia. Se pueden tener colonias sin central, y colonias
-// con más de una central
-
-// utilizando dijkstra
-void centralCercana(vector<coordenadas> &centrales, const coordenadas &nuevaContratacion, int n)
-{
-    vector<int> distancia(n, INT_MAX);
-    vector<bool> visitado(n, false);
-
-    distancia[nuevaContratacion.x] = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-        int u = -1;
-        for (int j = 0; j < n; j++)
-        {
-            if (!visitado[j] && (u == -1 || distancia[j] < distancia[u]))
-            {
-                u = j;
-            }
-        }
-
-        visitado[u] = true;
-
-        for (int v = 0; v < n; v++)
-        {
-            if (matrizCiudad[u][v] != -1 && distancia[u] != INT_MAX && distancia[u] + matrizCiudad[u][v] < distancia[v])
-            {
-                distancia[v] = distancia[u] + matrizCiudad[u][v];
-            }
+        for (int i = 0; i < n; i++) {
+            padre[i] = i;
+            rango[i] = 0;
         }
     }
 
-    int centralMasCercana = min_element(distancia.begin(), distancia.end()) - distancia.begin();
+    // Función para encontrar la raíz de un conjunto
+    int find(int v) {
+        if (v != padre[v])
+            padre[v] = find(padre[v]);
+        return padre[v];
+    }
 
-    cout << "La central más cercana a la nueva contratación es: " << centralMasCercana << endl;
+    // Función para fusionar dos conjuntos
+    void merge(int x, int y) {
+        int x_raiz = find(x);
+        int y_raiz = find(y);
 
-    return;
+        if (rango[x_raiz] > rango[y_raiz])
+            padre[y_raiz] = x_raiz;
+        else {
+            padre[x_raiz] = y_raiz;
+            if (rango[x_raiz] == rango[y_raiz])
+                rango[y_raiz]++;
+        }
+    }
+};
+
+// Función para ejecutar el algoritmo de Kruskal y obtener el MST
+vector<Aristas> kruskalMST(Grafo grafo) {
+    cout << "Parte 1: Kruskal" << endl;
+    vector<Aristas> result;
+    sort(grafo.edges.begin(), grafo.edges.end(), compararAristas);
+
+    minExpTree ds(grafo.V);
+
+    for (Aristas edge : grafo.edges) {
+        int padreInicio = ds.find(edge.inicio);
+        int padreFinal = ds.find(edge.final);
+
+        if (padreInicio != padreFinal) {
+            result.push_back(edge);
+            ds.merge(padreInicio, padreFinal);
+        }
+    }
+
+    return result;
 }
 
-// Imprimir todo
-void imprimir()
-{
-    return;
+// Función auxiliar para encontrar la ruta más corta utilizando backtracking
+void backtracking(vector<vector<int>> &grafo, int start, int current, int visited, Ruta &currentRoute, Ruta &shortestRoute) {
+    cout << "Parte 2: Backtracking" << endl;
+    if (visited == ((1 << grafo.size()) - 1)) {
+        if (grafo[current][start] != 0) {
+            currentRoute.length += grafo[current][start];
+            currentRoute.path.push_back(start);
+            if (currentRoute.length < shortestRoute.length) {
+                shortestRoute = currentRoute;
+            }
+            currentRoute.length -= grafo[current][start];
+            currentRoute.path.pop_back();
+        }
+        return;
+    }
+
+    for (int i = 0; i < grafo.size(); ++i) {
+        if (!(visited & (1 << i)) && grafo[current][i] != 0) {
+            currentRoute.length += grafo[current][i];
+            currentRoute.path.push_back(i);
+            backtracking(grafo, start, i, visited | (1 << i), currentRoute, shortestRoute);
+            currentRoute.length -= grafo[current][i];
+            currentRoute.path.pop_back();
+        }
+    }
 }
 
-// Función principal
-int main()
-{
-    vector<coordenadas> centrales; // Declare and initialize the vector "centrales"
-    leerArchivo("input.txt", centrales);
-    int start_x = 0, start_y = 0, goal_x = 3, goal_y = 3;
-    vector<pair<int, int>> ruta = branchAndBound(matrizCiudad, start_x, start_y, goal_x, goal_y);
-    coordenadas nuevaContratacion = {2, 2};
-    cout << "Nueva contratación: " << nuevaContratacion.x << ", " << nuevaContratacion.y << endl;
-    centralCercana(centrales, nuevaContratacion, matrizCiudad.size());
+// Función principal para encontrar la ruta más corta que visita cada colonia exactamente una vez
+Ruta findShortestRoute(vector<vector<int>> &grafo) {
+    Ruta shortestRoute;
+    shortestRoute.length = INT_MAX;
+
+    for (int i = 0; i < grafo.size(); ++i) {
+        Ruta currentRoute;
+        currentRoute.length = 0;
+        currentRoute.path.push_back(i);
+        backtracking(grafo, i, i, 1 << i, currentRoute, shortestRoute);
+    }
+
+    return shortestRoute;
 }
 
+// Función para calcular la distancia euclidiana entre dos puntos
+double calcularDistancia(const Coordenada &punto1, const Coordenada &punto2) {
+    return sqrt(pow(punto1.x - punto2.x, 2) + pow(punto1.y - punto2.y, 2));
+}
+
+// Función para encontrar la central más cercana a una nueva contratación
+int encontrarCentralMasCercana(const Coordenada &nuevaContratacion, const vector<Coordenada> &centrales) {
+    int indiceCentralMasCercana = -1;
+    double distanciaMinima = numeric_limits<double>::max();
+
+    for (int i = 0; i < centrales.size(); ++i) {
+        double distancia = calcularDistancia(nuevaContratacion, centrales[i]);
+        if (distancia < distanciaMinima) {
+            distanciaMinima = distancia;
+            indiceCentralMasCercana = i;
+        }
+    }
+
+    return indiceCentralMasCercana;
+}
+
+int main() {
+    // Nombre del archivo con la matriz de adyacencias
+    string nombreArchivo = "input.txt";
+    vector<Coordenada> centrales;
+    vector<vector<int>> matrizCiudad = leerArchivo(nombreArchivo, centrales);
+
+    // Verificar si la lectura del archivo fue exitosa
+    if (!matrizCiudad.empty()) {
+        int numVertices = matrizCiudad.size();
+        Grafo G(numVertices);
+
+        // Construir el grafo a partir de la matriz de adyacencias leída
+        for (int i = 0; i < numVertices; ++i) {
+            for (int j = 0; j < numVertices; ++j) {
+                if (matrizCiudad[i][j] != 0) {
+                    G.add_aristas(i, j, matrizCiudad[i][j]);
+                }
+            }
+        }
+
+        // Ejecutar el algoritmo de Kruskal
+        vector<Aristas> MST = kruskalMST(G);
+
+        // Imprimir el árbol de expansión mínima (MST)
+        for (Aristas edge : MST) {
+            cout << edge.inicio << " - " << edge.final << " : " << edge.weight << endl;
+        }
+    }
+
+    // Utilizar la matriz de adyacencia para encontrar la ruta más corta
+    vector<vector<int>> matrizAdyacencia = matrizCiudad;
+    Ruta shortestRoute = findShortestRoute(matrizAdyacencia);
+
+    // Imprimir la ruta más corta y su longitud
+    cout << "Ruta mas corta: ";
+    for (int node : shortestRoute.path) {
+        cout << node << " ";
+    }
+    cout << endl;
+    cout << "Distancia: " << shortestRoute.length << endl;
+
+    // Encontrar la central más cercana a una nueva contratación
+    Coordenada nuevaContratacion = {0, 9};
+    int indiceMasCercano = encontrarCentralMasCercana(nuevaContratacion, centrales);
+
+    if (indiceMasCercano != -1) {
+        cout << "Central mas cercana a nueva contratacion: " << indiceMasCercano << endl;
+        cout << "Coordenadas de central más cercana: (" << centrales[indiceMasCercano].x << ", " << centrales[indiceMasCercano].y << ")" << endl;
+    }
+
+    return 0;
+}
