@@ -229,7 +229,7 @@ int main() {
     cout << "Distancia: " << shortestRoute.length << endl;
 
     // Encontrar la central más cercana
-    Coordenada nuevaContratacion = {2, 2};
+    Coordenada nuevaContratacion = {0, 9};
 
     int indiceMasCercano = encontrarCentralMasCercana(nuevaContratacion, centrales);
 
