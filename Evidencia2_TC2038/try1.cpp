@@ -1,16 +1,7 @@
-// Evidencia 2: Actividad Integradora
-// Alina Rosas Macedo A01252720 y Fernanda Cantú Ortega A01782232
-// 30/11/2023
-
-//Líbrerias a utilizar
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <vector>
 #include <algorithm>
-#include <climits>
-#include <cmath>
-#include <queue>
 
 using namespace std;
 
@@ -125,69 +116,51 @@ vector<Edge> kruskalMST(Graph graph) {
     return result;
 }
 
-int start_x = 0; // Coordenada x de inicio
-int start_y = 0; // Coordenada y de inicio
-int goal_x = 3;  // Coordenada x de destino
-int goal_y = 3;  // Coordenada y de destino
+struct Route {
+    vector<int> path;
+    int length;
+};
 
-// Utilizando branch and bound
-vector<pair<int, int> > branchAndBound(vector<vector<int> > &matrizCiudad, int x, int y, int goal_x, int goal_y)
-{
-    // Definir las posibles direcciones (derecha, izquierda, arriba, abajo)
-    int dx[] = {0, 1, 0, -1};
-    int dy[] = {1, 0, -1, 0};
-    
-    // Encontrar un camino
-    int M = matrizCiudad.size();
-    int N = matrizCiudad[0].size();
-
-    vector<vector<int> > solucionBranchAndBound(M, vector<int>(N));
-
-    priority_queue<pair<int, pair<int, int> > > pq;
-
-    vector<pair<int, int> > ruta;
-
-
-    int distanciaFaltante = sqrt((x - goal_x) * (x - goal_x) + (y - goal_y) * (y - goal_y));
-    int estimadorInicial = distanciaFaltante;
-
-    pq.push(make_pair(-estimadorInicial, make_pair(x, y)));
-
-    while (!pq.empty()) 
-    {
-        // Obtener las coordenadas actuales
-        int i = pq.top().second.first;
-        int j = pq.top().second.second;
-        int cost = -pq.top().first;
-        pq.pop();
-
-        // Marcar la casilla actual como visitada
-        solucionBranchAndBound[i][j] = 1;
-
-        ruta.push_back(make_pair(i, j));
-
-        if (i == goal_x && j == goal_y)
-        {
-            return ruta;
-        }
-
-        for (int dir = 0; dir < 4; dir++) 
-        {
-            int ni = i + dx[dir];
-            int nj = j + dy[dir];
-
-            // Verificar si la nueva casilla es válida
-            if (ni >= 0 && ni < M && nj >= 0 && nj < N && matrizCiudad[ni][nj] == 1 && solucionBranchAndBound[ni][nj] == 0) 
-            {
-                int nuevoCosto = cost + 1;
-                // Agregar la casilla a la cola para explorarla más tarde
-                pq.push(make_pair(-nuevoCosto, make_pair(ni, nj)));
+// Función auxiliar para encontrar la ruta más corta utilizando backtracking
+void backtracking(vector<vector<int> >& graph, int start, int current, int visited, Route& currentRoute, Route& shortestRoute) {
+    if (visited == ((1 << graph.size()) - 1)) {
+        if (graph[current][start] != 0) {
+            currentRoute.length += graph[current][start];
+            currentRoute.path.push_back(start);
+            if (currentRoute.length < shortestRoute.length) {
+                shortestRoute = currentRoute;
             }
+            currentRoute.length -= graph[current][start];
+            currentRoute.path.pop_back();
+        }
+        return;
+    }
+
+    for (int i = 0; i < graph.size(); ++i) {
+        if (!(visited & (1 << i)) && graph[current][i] != 0) {
+            currentRoute.length += graph[current][i];
+            currentRoute.path.push_back(i);
+            backtracking(graph, start, i, visited | (1 << i), currentRoute, shortestRoute);
+            currentRoute.length -= graph[current][i];
+            currentRoute.path.pop_back();
         }
     }
-    return ruta;
 }
 
+// Función principal para encontrar la ruta más corta que visita cada colonia exactamente una vez
+Route findShortestRoute(vector<vector<int> >& graph) {
+    Route shortestRoute;
+    shortestRoute.length = INT_MAX;
+
+    for (int i = 0; i < graph.size(); ++i) {
+        Route currentRoute;
+        currentRoute.length = 0;
+        currentRoute.path.push_back(i);
+        backtracking(graph, i, i, 1 << i, currentRoute, shortestRoute);
+    }
+
+    return shortestRoute;
+}
 
 
 int main() {
@@ -217,11 +190,17 @@ int main() {
             cout << edge.src << " - " << edge.dest << " : " << edge.weight << endl;
         }
 
-        vector<pair<int, int> > ruta = branchAndBound(matrizCiudad, start_x, start_y, goal_x, goal_y);
-        Coordenada nuevaContratacion = {2, 2};
-        cout << "Nueva contratación: " << nuevaContratacion.x << ", " << nuevaContratacion.y << endl;
-
     }
+
+    vector<vector<int> > adjacencyMatrix = matrizCiudad; // Usa tu matriz de adyacencia aquí
+
+    Route shortestRoute = findShortestRoute(adjacencyMatrix);
+
+    cout << "Ruta más corta: ";
+    for (int node : shortestRoute.path) {
+        cout << node << " " << endl;
+    }
+    cout << "Distancia: " << shortestRoute.length << endl;
 
     return 0;
 }
