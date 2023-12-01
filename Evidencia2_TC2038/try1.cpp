@@ -167,6 +167,27 @@ Route findShortestRoute(vector<vector<int> >& graph) {
     return shortestRoute;
 }
 
+// Función para calcular la distancia euclidiana entre dos puntos
+double calcularDistancia(const Coordenada& punto1, const Coordenada& punto2) {
+    return sqrt(pow(punto1.x - punto2.x, 2) + pow(punto1.y - punto2.y, 2));
+}
+
+// Función para encontrar la central más cercana a una nueva contratación
+int encontrarCentralMasCercana(const Coordenada& nuevaContratacion, const vector<Coordenada>& centrales) {
+    int indiceCentralMasCercana = -1;
+    double distanciaMinima = numeric_limits<double>::max();
+
+    for (int i = 0; i < centrales.size(); ++i) {
+        double distancia = calcularDistancia(nuevaContratacion, centrales[i]);
+        if (distancia < distanciaMinima) {
+            distanciaMinima = distancia;
+            indiceCentralMasCercana = i;
+        }
+    }
+
+    return indiceCentralMasCercana;
+}
+
 
 int main() {
     string nombreArchivo = "input.txt"; // Nombre del archivo con la matriz de adyacencias
@@ -206,6 +227,19 @@ int main() {
         cout << node << " " << endl;
     }
     cout << "Distancia: " << shortestRoute.length << endl;
+
+    // Encontrar la central más cercana
+    Coordenada nuevaContratacion = {2, 2};
+
+    int indiceMasCercano = encontrarCentralMasCercana(nuevaContratacion, centrales);
+
+    if (indiceMasCercano != -1) {
+        cout << "La central más cercana a la nueva contratación está en el índice: " << indiceMasCercano << endl;
+        cout << "Coordenadas de la central más cercana: (" << centrales[indiceMasCercano].x << ", " << centrales[indiceMasCercano].y << ")" << endl;
+    } else {
+        cout << "No se encontró una central cercana." << endl;
+    }
+
 
     return 0;
 }
