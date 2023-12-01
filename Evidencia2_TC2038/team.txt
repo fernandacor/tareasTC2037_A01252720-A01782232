@@ -1,3 +1,8 @@
 INTEGRANTES DEL EQUIPO:
 Alina Rosas Macedo A01252720
 Fernanda Cantú Ortega A01782232
+
+Para llevar a cabo esta actividad integradora, nos pareció lo más sensato rebotar ideas y consultar con la 
+otra sobre cuál algoritmo creíamos que era la mejor opción para cada fragmento del problema. Esto llevó a que
+fuera un trabajo altamente colaborativo, y juntas aportamos para la realización del mismo. A pesar de que Alina
+se enfocó un poco más en Kruskal y Fernanda en Backtracking, ambas contribuimos a todo.
